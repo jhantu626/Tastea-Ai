@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,6 +12,11 @@ import ProfileScreen from './screens/ProfileScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
 import Login from './screens/Auth/Login';
 import Signup from './screens/Auth/Signup';
+import { colors } from './utils/colors';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const App = () => {
 
@@ -22,7 +27,7 @@ const App = () => {
 
   const AuthStack=()=>{
     return (
-      <Stack.Navigator initialRouteName='Signup' screenOptions={{
+      <Stack.Navigator initialRouteName='Splash' screenOptions={{
         animation: 'slide_from_right',
         headerShown: false
       }}>
@@ -42,19 +47,72 @@ const App = () => {
 
 
 
-  const AppStack=()=>{
+  const AppStack = () => {
     return (
-      <Tabs.Navigator screenOptions={{
-        // animation: 'shift'
-      }}>
-        <Tabs.Screen name='Home' component={HomeScreen}/>
-        <Tabs.Screen name='DietPlan' component={DietPlan}/>
-        <Tabs.Screen name='GenerateRecipe' component={GenerateRecipe}/>
-        <Tabs.Screen name='MealPlan' component={MealPlan}/>
-        <Tabs.Screen name='Profile' component={ProfileScreen}/>
+      <Tabs.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: colors.theme,
+          tabBarInactiveTintColor: 'gray',
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarStyle: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'white',
+          },
+          tabBarButton: (props)=>(
+            <Pressable {...props} android_ripple={{color: colors.theme}}/>
+          )
+        }}
+      >
+        <Tabs.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({ size, focused, color }) => (
+              <Entypo name="home" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="DietPlan"
+          component={DietPlan}
+          options={{
+            tabBarIcon: ({ size, focused, color }) => (
+              <FontAwesome5 name="apple-alt" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="GenerateRecipe"
+          component={GenerateRecipe}
+          options={{
+            tabBarIcon: ({ size, focused, color }) => (
+              <MaterialCommunityIcons name="chef-hat" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="MealPlan"
+          component={MealPlan}
+          options={{
+            tabBarIcon: ({ size, focused, color }) => (
+              <MaterialIcons name="restaurant-menu" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            tabBarIcon: ({ size, focused, color }) => (
+              <FontAwesome5 name="user-circle" size={size} color={color} />
+            ),
+          }}
+        />
       </Tabs.Navigator>
-    )
-  }
+    );
+  };
 
   return (
     <NavigationContainer>

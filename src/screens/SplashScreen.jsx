@@ -15,7 +15,7 @@ const SplashScreen = () => {
       navigation.dispatch(
         StackActions.replace("Onboarding")
       )
-    },5000)
+    },3000)
   }, []);
   return (
     <View style={styles.container}>
