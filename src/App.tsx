@@ -10,6 +10,8 @@ import GenerateRecipe from './screens/GenerateRecipe';
 import MealPlan from './screens/MealPlan';
 import ProfileScreen from './screens/ProfileScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
+import Login from './screens/Auth/Login';
+import Signup from './screens/Auth/Signup';
 
 const App = () => {
 
@@ -20,14 +22,19 @@ const App = () => {
 
   const AuthStack=()=>{
     return (
-      <Stack.Navigator initialRouteName='Splash' screenOptions={{
-        animation: 'slide_from_right'
+      <Stack.Navigator initialRouteName='Signup' screenOptions={{
+        animation: 'slide_from_right',
+        headerShown: false
       }}>
         <Stack.Screen name='Splash' component={SplashScreen} options={{
           headerShown: false,
         }}/>
         <Stack.Screen name='Onboarding' component={OnboardingScreen} options={{
           headerShown: false
+        }}/>
+        <Stack.Screen name='Login' component={Login}/>
+        <Stack.Screen name='Signup' component={Signup} options={{
+          animation: 'slide_from_left'
         }}/>
       </Stack.Navigator>
     )
@@ -51,11 +58,12 @@ const App = () => {
 
   return (
     <NavigationContainer>
-        {isLogin?<AppStack/>:<AuthStack/>}
-      </NavigationContainer>
+      {isLogin?<AppStack/>:<AuthStack/>}
+    </NavigationContainer>
   )
 }
 
-export default App
 
 const styles = StyleSheet.create({})
+
+export default App

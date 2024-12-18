@@ -6,6 +6,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import { StackActions, TabActions, useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const SplashScreen = () => {
   const navigation=useNavigation();
@@ -22,7 +23,7 @@ const SplashScreen = () => {
         style={[styles.image, {marginTop: -5}]}
         source={require('./../../assets//images/images/splash2.png')}
       />
-      <View style={styles.contentContainer}>
+      <LinearGradient colors={['#F0F3ED','#FCFCF9']} style={styles.contentContainer}>
         <Image
           style={styles.logo}
           source={require('./../../assets/images/logoIcons/logo.png')}
@@ -36,7 +37,7 @@ const SplashScreen = () => {
         </View>
         <Text style={{fontSize: 22,fontFamily: fonts.semiBold,color: '#dd4941'}}>Cook Smart, Eat Well</Text>
         </View>
-      </View>
+      </LinearGradient>
       <Image
         style={[styles.image]}
         source={require('./../../assets//images/images/splash1.png')}
@@ -60,15 +61,17 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     height: responsiveHeight(20),
-    backgroundColor: '#fcfcf9',
+    width: responsiveWidth(100),
+    // backgroundColor: '#fcfcf9',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   logo: {
-    width: responsiveWidth(30),
-    height: responsiveHeight(10),
+    width: responsiveWidth(15),
+    height: responsiveHeight(8),
     resizeMode: 'cover',
+    borderRadius: 5
   },
 });
 
