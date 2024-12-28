@@ -1,10 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
 
 const ProfileScreen = () => {
+  const {logout}=useContext(AuthContext)
   return (
     <View>
-      <Text>ProfileScreen</Text>
+      <TouchableOpacity onPress={async ()=>{
+        await logout();
+      }}><Text>Logout</Text></TouchableOpacity>
     </View>
   )
 }

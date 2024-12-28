@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -7,18 +8,75 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {fonts} from '../../utils/fonts';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../utils/colors';
 import {useNavigation} from '@react-navigation/native';
+import {authService} from '../../service/AuthService';
+import {AuthContext} from '../../context/AuthContext';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const Login = () => {
   const [isPassword, setIsPassword] = useState(true);
   const navigation = useNavigation();
+  const {login} = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // Error State
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const validateEmail = email => {
+    // Regular expression for email validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+
+    try {
+      if(email===''){
+        setEmailError("Enter email");
+        return;
+      }
+      if (!validateEmail(email)) {
+        setEmailError('Enter a valid Email');
+        return;
+      }
+      if (password.length < 1) {
+        setPasswordError('Enter Password');
+        return;
+      }
+
+      const data = await authService.login({email: email, password: password});
+
+      if (data?.status) {
+        login({token: data?.token});
+      } else {
+        Toast.show({
+          type: ALERT_TYPE.WARNING,
+          title: 'Login Failed',
+          textBody: data?.message,
+          titleStyle: {
+            fontFamily: fonts.bold
+          },
+          textBodyStyle:{
+            fontFamily: fonts.regular,
+          }
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <ScrollView
@@ -37,13 +95,25 @@ const Login = () => {
         <View style={styles.inputParent}>
           <MaterialCommunityIcons color={colors.theme} name="email" size={28} />
           <TextInput
-          keyboardType='email-address'
+            keyboardType="email-address"
             onChangeText={e => setEmail(e)}
             value={email}
             style={styles.inputBox}
             placeholder="Enter your email"
           />
         </View>
+        {emailError === '' ? null : (
+          <Text
+            style={{
+              color: 'red',
+              marginTop: -5,
+              marginLeft: 10,
+              fontFamily: fonts.medium,
+            }}>
+            <MaterialIcons name="error" />
+            {emailError}
+          </Text>
+        )}
         <View style={styles.inputParent}>
           <MaterialCommunityIcons
             color={colors.theme}
@@ -51,6 +121,7 @@ const Login = () => {
             size={28}
           />
           <TextInput
+          keyboardType='visible-password'
             value={password}
             onChangeText={e => setPassword(e)}
             secureTextEntry={isPassword}
@@ -65,14 +136,30 @@ const Login = () => {
             />
           </TouchableOpacity>
         </View>
+        {passwordError === '' ? null : (
+          <Text
+            style={{
+              color: 'red',
+              marginTop: -5,
+              marginLeft: 10,
+              fontFamily: fonts.medium,
+            }}>
+            <MaterialIcons name="error" />
+            {passwordError}
+          </Text>
+        )}
         <TouchableOpacity style={{alignSelf: 'flex-end'}}>
           <Text style={{fontFamily: fonts.regular}}>Forgot Password?</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text style={{color: '#fff', fontSize: 20, fontFamily: fonts.medium}}>
-          Login
-        </Text>
+      <TouchableOpacity disabled={isLoading} onPress={handleLogin} style={styles.loginBtn}>
+        {isLoading ? (
+          <ActivityIndicator color={'#fff'} size={'large'} />
+        ) : (
+          <Text style={{color: '#fff', fontSize: 20, fontFamily: fonts.medium}}>
+            Login
+          </Text>
+        )}
       </TouchableOpacity>
       <View style={styles.haveAccount}>
         <Text style={{fontFamily: fonts.regular, fontSize: 16}}>

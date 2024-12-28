@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -7,20 +8,84 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {fonts} from '../../utils/fonts';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../utils/colors';
 import {useNavigation} from '@react-navigation/native';
+import {authService} from '../../service/AuthService';
+import {AuthContext} from '../../context/AuthContext';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {ALERT_TYPE, Dialog, Toast} from 'react-native-alert-notification';
 
 const Signup = () => {
   const [isPassword, setIsPassword] = useState(true);
   const [isPassword2, setIsPassword2] = useState(true);
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
+
+  //Error State
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const {login} = useContext(AuthContext);
+
+  const validateEmail = email => {
+    // Regular expression for email validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const handleSignup = async () => {
+    setIsLoading(true);
+    try {
+      if (!validateEmail(email)) {
+        setEmailError('Enter a valid email?');
+        return;
+      } else {
+        setEmailError('');
+      }
+      if (password === '') {
+        setPasswordError('!Enter password?');
+        return;
+      }
+      if (password === '') {
+        setPasswordError('Enter confirmed password?');
+        return;
+      }
+      if (password.length < 6) {
+        setPasswordError('Password must be at least 6 characters');
+        return;
+      }
+      if (password !== confirmedPassword) {
+        setPasswordError('Password do not match?');
+        return;
+      } else {
+        setEmailError('');
+      }
+
+      const data = await authService.signup({email: email, password: password});
+
+      console.log(data);
+      if (data?.status) {
+        await login({token: data?.token});
+      } else {
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Signup Failed',
+          textBody: data?.message,
+          button: 'Close'
+        });
+      }
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <ScrollView
@@ -46,6 +111,19 @@ const Signup = () => {
             placeholder="Enter your email"
           />
         </View>
+        {emailError === '' ? null : (
+          <Text
+            style={{
+              color: 'red',
+              marginTop: -5,
+              marginLeft: 10,
+              fontFamily: fonts.medium,
+            }}>
+            <MaterialIcons name="error" />
+            {emailError}
+          </Text>
+        )}
+
         <View style={styles.inputParent}>
           <MaterialCommunityIcons
             color={colors.theme}
@@ -88,11 +166,24 @@ const Signup = () => {
             />
           </TouchableOpacity>
         </View>
+        {passwordError === '' ? null : (
+          <Text style={{color: 'red', fontFamily: fonts.medium}}>
+            <MaterialIcons name="error" />
+            {passwordError}
+          </Text>
+        )}
       </View>
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text style={{color: '#fff', fontSize: 20, fontFamily: fonts.medium}}>
-          Signup
-        </Text>
+      <TouchableOpacity
+        onPress={handleSignup}
+        disabled={isLoading}
+        style={styles.loginBtn}>
+        {isLoading ? (
+          <ActivityIndicator color={'#fff'} size={'large'} />
+        ) : (
+          <Text style={{color: '#fff', fontSize: 20, fontFamily: fonts.medium}}>
+            Signup
+          </Text>
+        )}
       </TouchableOpacity>
       <View style={styles.haveAccount}>
         <Text style={{fontFamily: fonts.regular, fontSize: 16}}>
