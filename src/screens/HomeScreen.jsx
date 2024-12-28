@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Breakfast, Category, Header, Launch, Search } from '../components'
+import { Breakfast, Category, Dinner, Header, Launch, Search } from '../components'
 import { colors } from '../utils/colors'
 import { fonts } from '../utils/fonts'
 
@@ -14,6 +14,7 @@ const HomeScreen = () => {
       <Category />
       <Breakfast/>
       <Launch/>
+      <Dinner/>
     </ScrollView>
   )
 }
