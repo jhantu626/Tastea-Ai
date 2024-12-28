@@ -22,6 +22,7 @@ import dessertsIcon from './../../assets/categoryicons/desserts.png';
 import appetizersIcon from './../../assets/categoryicons/appetizers.png';
 import drinksIcon from './../../assets/categoryicons/drinks.png';
 import brunchIcon from './../../assets/categoryicons/brunch.png';
+import ComponentHeader from './SubComponents/ComponentHeader';
 
 const Category = () => {
   const foodCategories = [
@@ -39,19 +40,7 @@ const Category = () => {
 
   return (
     <View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Text style={{fontSize: 22, fontFamily: fonts.medium}}>Categories</Text>
-        <TouchableOpacity>
-          <Text style={{fontFamily: fonts.medium, color: colors.theme}}>
-            See all
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <ComponentHeader title={"Categories"}/>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -86,7 +75,7 @@ const Category = () => {
 
 const styles = StyleSheet.create({
   selectedCategoryStyle: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: colors.secondaryTheme,
   },
   categoryItems: {
     width: 80,

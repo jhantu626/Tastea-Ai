@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { Category, Header, Search } from '../components'
+import { Breakfast, Category, Header, Search } from '../components'
 import { colors } from '../utils/colors'
 import { fonts } from '../utils/fonts'
 
@@ -12,6 +12,7 @@ const HomeScreen = () => {
       to cook today?</Text>
       <Search/>
       <Category />
+      <Breakfast/>
     </ScrollView>
   )
 }

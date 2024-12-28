@@ -1,5 +1,10 @@
 import Header from './Header';
 import Search from './Search';
-import Category from './Category';
 
-export {Header, Search, Category};
+
+//Home Components
+import Category from './Category';
+import Breakfast from './Breakfast';
+
+
+export {Header, Search, Category,Breakfast};
