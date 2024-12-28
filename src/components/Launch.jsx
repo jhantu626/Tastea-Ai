@@ -3,11 +3,11 @@ import React from 'react';
 import ComponentHeader from './SubComponents/ComponentHeader';
 import { fonts } from '../utils/fonts';
 
-const Breakfast = () => {
+const Launch = () => {
   return (
     <View>
-      <ComponentHeader title={'Breakfast'} />
-      <View style={styles.breakfastImageContainer}>
+      <ComponentHeader title={'Launch'} />
+      <View style={styles.launchImageContainer}>
         <View style={styles.firstImageContainer}>
           <Image
             style={{
@@ -16,13 +16,13 @@ const Breakfast = () => {
               borderRadius: 20,
               objectFit: 'cover',
             }}
-            source={require('./../../assets/images/images/breakfast1.jpg')}
+            source={require('./../../assets/images/images/launch1.jpg')}
           />
         </View>
         <View style={styles.secondImageContainer}>
           <Image
             style={styles.secondImage}
-            source={require('./../../assets/images/images/breakfast2.jpg')}
+            source={require('./../../assets/images/images/launch2.jpg')}
           />
           <TouchableOpacity style={{height: '48%'}}>
             <View
@@ -54,7 +54,7 @@ const Breakfast = () => {
               </View>
             <Image
               style={[styles.secondImage, {height: '100%'}]}
-              source={require('./../../assets/images/images/breakfast3.jpg')}
+              source={require('./../../assets/images/images/launch3.jpg')}
             />
           </TouchableOpacity>
         </View>
@@ -62,8 +62,6 @@ const Breakfast = () => {
     </View>
   );
 };
-
-export default Breakfast;
 
 const styles = StyleSheet.create({
   secondImage: {
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     elevation: 10,
   },
-  breakfastImageContainer: {
+  launchImageContainer: {
     width: '100%',
     // height: 80,
     flexDirection: 'row',
@@ -104,3 +102,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 });
+
+
+export default Launch
