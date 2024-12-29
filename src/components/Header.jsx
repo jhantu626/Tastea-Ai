@@ -12,7 +12,9 @@ const Header = ({isHome = false,title=""}) => {
 
 
   const handleBack=()=>{
-    navigation.goBack();
+    if(navigation.canGoBack()){
+      navigation.goBack();
+    }
   }
 
   return (
