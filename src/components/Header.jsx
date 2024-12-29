@@ -4,8 +4,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {fonts} from '../utils/fonts';
 import {colors} from '../utils/colors';
+import { StackActions, TabActions, useNavigation } from '@react-navigation/native';
 
 const Header = ({isHome = false,title=""}) => {
+  const navigation=useNavigation();
+
+
+
+  const handleBack=()=>{
+    navigation.goBack();
+  }
+
   return (
     <View style={styles.container}>
       {isHome ? (
@@ -15,6 +24,7 @@ const Header = ({isHome = false,title=""}) => {
         />
       ) : (
         <TouchableOpacity
+        onPress={handleBack}
           style={{
             width: 35,
             height: 35,
