@@ -7,7 +7,7 @@ import { fonts } from '../utils/fonts'
 const HomeScreen = () => {
   return (
     <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} style={{flex: 1, paddingHorizontal: 20,backgroundColor: colors.defaultBgColor}}>
-      <Header />
+      <Header isHome={true} />
       <Text style={styles.headerText}>What would you like
       to cook today?</Text>
       <Search/>

@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { Header } from '../components'
 
 const DietPlan = () => {
   return (
-    <View>
-      <Text>DietPlan</Text>
+    <View style={{flex: 1,paddingHorizontal: 20}}>
+      <Header title='DietPlan'/>
     </View>
   )
 }
