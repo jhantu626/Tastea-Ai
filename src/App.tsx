@@ -19,12 +19,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AuthProvider, {AuthContext} from './context/AuthContext';
 import {AlertNotificationRoot} from 'react-native-alert-notification';
+import { createStackNavigator } from '@react-navigation/stack';
+import DietPlanCreator from './screens/DietPlanCreator';
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   const Stack = createNativeStackNavigator();
   const Tabs = createBottomTabNavigator();
+  const dietStack=createStackNavigator();
 
   const AuthStack = () => {
     return (
@@ -60,9 +63,22 @@ const App = () => {
     );
   };
 
+
+  const DietStack=()=>{
+    return <dietStack.Navigator initialRouteName='DietPlanCreator' screenOptions={{
+      headerShown: false,
+      animation: 'slide_from_right'
+    }}>
+      <dietStack.Screen name='DietPlanHome' component={DietPlan}/>
+      <dietStack.Screen name='DietPlanCreator' component={DietPlanCreator}/>
+    </dietStack.Navigator>
+  }
+
+
   const AppStack = () => {
     return (
       <Tabs.Navigator
+      initialRouteName='DietPlan'
         screenOptions={{
           tabBarActiveTintColor: colors.theme,
           tabBarInactiveTintColor: 'gray',
@@ -89,7 +105,7 @@ const App = () => {
         />
         <Tabs.Screen
           name="DietPlan"
-          component={DietPlan}
+          component={DietStack}
           options={{
             tabBarIcon: ({size, focused, color}) => (
               <FontAwesome5 name="apple-alt" size={size} color={color} />
@@ -130,6 +146,8 @@ const App = () => {
       </Tabs.Navigator>
     );
   };
+
+  
 
   const AppNav = () => {
     const {userToken} = useContext(AuthContext);
