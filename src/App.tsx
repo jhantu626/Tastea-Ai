@@ -19,7 +19,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AuthProvider, {AuthContext} from './context/AuthContext';
 import {AlertNotificationRoot} from 'react-native-alert-notification';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import DietPlanCreator from './screens/DietPlanCreator';
 
 const App = () => {
@@ -27,7 +27,7 @@ const App = () => {
 
   const Stack = createNativeStackNavigator();
   const Tabs = createBottomTabNavigator();
-  const dietStack=createStackNavigator();
+  const dietStack = createStackNavigator();
 
   const AuthStack = () => {
     return (
@@ -63,22 +63,24 @@ const App = () => {
     );
   };
 
-
-  const DietStack=()=>{
-    return <dietStack.Navigator initialRouteName='DietPlanHome' screenOptions={{
-      headerShown: false,
-      animation: 'slide_from_right'
-    }}>
-      <dietStack.Screen name='DietPlanHome' component={DietPlan}/>
-      <dietStack.Screen name='DietPlanCreator' component={DietPlanCreator}/>
-    </dietStack.Navigator>
-  }
-
+  const DietStack = () => {
+    return (
+      <dietStack.Navigator
+        initialRouteName="DietPlanHome"
+        screenOptions={{
+          headerShown: false,
+          animation: 'slide_from_right',
+        }}>
+        <dietStack.Screen name="DietPlanHome" component={DietPlan} />
+        <dietStack.Screen name="DietPlanCreator" component={DietPlanCreator} />
+      </dietStack.Navigator>
+    );
+  };
 
   const AppStack = () => {
     return (
       <Tabs.Navigator
-      initialRouteName='DietPlan'
+        initialRouteName="Home"
         screenOptions={{
           tabBarActiveTintColor: colors.theme,
           tabBarInactiveTintColor: 'gray',
@@ -92,7 +94,7 @@ const App = () => {
           tabBarButton: props => (
             <Pressable {...props} android_ripple={{color: colors.theme}} />
           ),
-          animation: 'shift'
+          animation: 'shift',
         }}>
         <Tabs.Screen
           name="Home"
@@ -146,8 +148,6 @@ const App = () => {
       </Tabs.Navigator>
     );
   };
-
-  
 
   const AppNav = () => {
     const {userToken} = useContext(AuthContext);
