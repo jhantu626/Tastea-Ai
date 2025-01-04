@@ -21,7 +21,7 @@ const Diet1 = ({setStep}) => {
     {value: 'None'},
   ];
 
-  const [gender, setGender] = useState('male');
+  const [gender, setGender] = useState('');
   const [selectedActivity, setSelectedActivity] = useState(null);
   return (
     <View style={{marginVertical: 20, gap: 10}}>
