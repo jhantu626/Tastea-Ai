@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Diet3 = () => {
+const Diet3 = ({setStep}) => {
   return (
     <View>
-      <Text>Diet3</Text>
+      
     </View>
   )
 }

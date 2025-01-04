@@ -50,7 +50,7 @@ const DietPlanCreator = () => {
       case 1:
         return <Diet2 setStep={setStep}/>;
       case 2:
-        return <Diet3 />;
+        return <Diet3 setStep={setStep}/>;
       case 3:
         return <DietResult />;
       default:
