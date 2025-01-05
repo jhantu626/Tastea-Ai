@@ -2,6 +2,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {fonts} from '../../utils/fonts';
 import {colors} from '../../utils/colors';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 
 const categories = [
   {
@@ -46,8 +47,7 @@ const categories = [
   },
 ];
 
-const Diet2 = ({setStep}) => {
-  const [selectedMeal, setSelectedMeal] = useState('');
+const Diet2 = ({setStep, selectedMeal, setSelectedMeal}) => {
   return (
     <View style={{marginVertical: 10}}>
       <Text
@@ -84,10 +84,33 @@ const Diet2 = ({setStep}) => {
         })}
       </View>
       <View style={styles.buttonConainer}>
-        <TouchableOpacity onPress={()=>setStep(prev=>prev-1)} style={[styles.button,{backgroundColor: colors.fontColor1}]}>
+        <TouchableOpacity
+          onPress={() => setStep(prev => prev - 1)}
+          style={[styles.button, {backgroundColor: colors.fontColor1}]}>
           <Text style={styles.btnTxt}>Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>setStep(prev=>prev+1)} style={[styles.button,{backgroundColor: '#4CAF50'}]}>
+        <TouchableOpacity
+          onPress={() => {
+            if (selectedMeal === '') {
+              Toast.show({
+                title: 'Warning',
+                type: ALERT_TYPE.WARNING,
+                textBody: 'Select A Meal Option',
+                titleStyle: {
+                  fontFamily: fonts.semiBold,
+                },
+                textBodyStyle: {
+                  fontSize: 16,
+                  fontFamily: fonts.medium,
+                  color: colors.fontColor1,
+                },
+              });
+              return;
+            } else {
+              setStep(prev => prev + 1);
+            }
+          }}
+          style={[styles.button, {backgroundColor: '#4CAF50'}]}>
           <Text style={styles.btnTxt}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -96,17 +119,17 @@ const Diet2 = ({setStep}) => {
 };
 
 const styles = StyleSheet.create({
-  btnTxt:{
+  btnTxt: {
     fontSize: 16,
     fontFamily: fonts.medium,
-    color: '#fff'
+    color: '#fff',
   },
   button: {
     width: '48%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10
+    borderRadius: 10,
   },
   buttonConainer: {
     height: 50,

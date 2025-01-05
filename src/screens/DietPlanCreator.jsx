@@ -49,7 +49,7 @@ const DietPlanCreator = () => {
   const [height, setHeight] = useState({feet: '', inces: ''});
   const [weight, setWeight] = useState('');
   const [age, setAge] = useState('');
-
+  const [selectedMeal, setSelectedMeal] = useState('');
   const renderStepContent = () => {
     switch (step) {
       case 0:
@@ -69,7 +69,13 @@ const DietPlanCreator = () => {
           />
         );
       case 1:
-        return <Diet2 setStep={setStep} />;
+        return (
+          <Diet2
+            setStep={setStep}
+            selectedMeal={selectedMeal}
+            setSelectedMeal={setSelectedMeal}
+          />
+        );
       case 2:
         return <Diet3 setStep={setStep} />;
       case 3:
