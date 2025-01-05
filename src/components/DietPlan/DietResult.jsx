@@ -2,6 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {fonts} from '../../utils/fonts';
 import {colors} from '../../utils/colors';
+import {useNavigation} from '@react-navigation/native';
 
 const DietResult = ({
   gender,
@@ -13,7 +14,7 @@ const DietResult = ({
   selectedDietGoal = [],
   setStep,
 }) => {
-  console.log(selectedActivity)
+  console.log(selectedActivity);
   let message = 'Your Details:\n';
 
   message += `Gender: ${gender || 'Not specified'}\n`;
@@ -36,6 +37,21 @@ const DietResult = ({
   message += `Diet Goals: ${
     selectedDietGoal.length > 0 ? selectedDietGoal.join(', ') : 'Not specified'
   }\n`;
+
+  const navigation = useNavigation();
+
+  const handleGenerateBtn = () => {
+    navigation.navigate('DietPlanGenerator', {
+      gender,
+      selectedActivity,
+      height,
+      weight,
+      age,
+      selectedMeal,
+      selectedDietGoal,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Text
@@ -56,6 +72,7 @@ const DietResult = ({
         {message}
       </Text>
       <TouchableOpacity
+      onPress={handleGenerateBtn}
         style={{
           height: 50,
           justifyContent: 'center',

@@ -1,9 +1,35 @@
-import React from 'react'
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {useRoute} from '@react-navigation/native';
 
-const DietStart = () => {
+const DietGeneration = () => {
+  const route = useRoute();
+
+  const {
+    gender,
+    selectedActivity,
+    height,
+    weight,
+    age,
+    selectedMeal,
+    selectedDietGoal,
+  } = route.params;
+
+  console.log(gender,
+    selectedActivity,
+    height,
+    weight,
+    age,
+    selectedMeal,
+    selectedDietGoal,)
+
   return (
-    <div>DietStart</div>
-  )
-}
+    <View>
+      <Text>DietGeneration</Text>
+    </View>
+  );
+};
 
-export default DietStart
+export default DietGeneration;
+
+const styles = StyleSheet.create({});

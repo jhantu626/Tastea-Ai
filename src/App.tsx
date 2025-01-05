@@ -21,6 +21,7 @@ import AuthProvider, {AuthContext} from './context/AuthContext';
 import {AlertNotificationRoot} from 'react-native-alert-notification';
 import {createStackNavigator} from '@react-navigation/stack';
 import DietPlanCreator from './screens/DietPlanCreator';
+import DietGeneration from './components/DietPlan/DietGeneration';
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -73,6 +74,7 @@ const App = () => {
         }}>
         <dietStack.Screen name="DietPlanHome" component={DietPlan} />
         <dietStack.Screen name="DietPlanCreator" component={DietPlanCreator} />
+        <dietStack.Screen name="DietPlanGenerator" component={DietGeneration} />
       </dietStack.Navigator>
     );
   };
