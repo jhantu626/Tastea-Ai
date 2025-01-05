@@ -40,7 +40,7 @@ const customStyles = {
 };
 
 const DietPlanCreator = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(3);
   const labels = ['Physical Info', 'Mean Preferences', 'Goal', 'Confirmation'];
 
   // Diet Plan Datas
@@ -86,7 +86,18 @@ const DietPlanCreator = () => {
           />
         );
       case 3:
-        return <DietResult />;
+        return (
+          <DietResult
+            age={age}
+            gender={gender}
+            height={height}
+            selectedActivity={selectedActivity}
+            selectedMeal={selectedMeal}
+            weight={weight}
+            selectedDietGoal={selectedDietGoal}
+            setStep={setStep}
+          />
+        );
       default:
         return null;
     }
