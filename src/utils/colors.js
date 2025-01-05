@@ -3,7 +3,8 @@ const colors={
     secondaryTheme: '#FAAF46',
     defaultBgColor: '#f6f6f7',
     headerTextColor: "#7B7B7B",
-    fontColor1: "#888888"
+    fontColor1: "#888888",
+    greenColorTheme: "#4CAF50"
 }
 
 export {colors}

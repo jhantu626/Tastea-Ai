@@ -40,7 +40,7 @@ const customStyles = {
 };
 
 const DietPlanCreator = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
   const labels = ['Physical Info', 'Mean Preferences', 'Goal', 'Confirmation'];
 
   const renderStepContent = () => {
