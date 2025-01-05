@@ -146,11 +146,11 @@ const Diet1 = ({
       <TouchableOpacity
         onPress={() => {
           if (
-            gender === '' &&
-            selectedActivity === null &&
-            (height.feet === '' && height.inces === '') &&
-            weight === '' &&
-            age === ''
+            age === '' ||
+            gender === '' ||
+            weight === '' ||
+            height.inces === '' ||
+            height.feet===''
           ) {
             Toast.show({
               title: 'Warning',

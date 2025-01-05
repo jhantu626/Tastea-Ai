@@ -13,11 +13,12 @@ const DietResult = ({
   selectedDietGoal = [],
   setStep,
 }) => {
+  console.log(selectedActivity)
   let message = 'Your Details:\n';
 
   message += `Gender: ${gender || 'Not specified'}\n`;
   message += `Activity Level: ${
-    selectedActivity ? selectedActivity.label : 'Not specified'
+    selectedActivity ? selectedActivity : 'Not specified'
   }\n`;
 
   const heightFeet = height?.feet; // use parseInt to convert to number
@@ -76,20 +77,20 @@ const DietResult = ({
         style={{
           flexDirection: 'row',
           flexWrap: 'wrap',
-          gap: 10
+          gap: 10,
         }}>
         <TouchableOpacity
-        onPress={()=>setStep(0)}
+          onPress={() => setStep(0)}
           style={styles.btnContainer}>
           <Text style={styles.btnText}>Change Physical Info</Text>
         </TouchableOpacity>
         <TouchableOpacity
-        onPress={()=>setStep(1)}
+          onPress={() => setStep(1)}
           style={styles.btnContainer}>
           <Text style={styles.btnText}>Change Meal Preferences</Text>
         </TouchableOpacity>
         <TouchableOpacity
-        onPress={()=>setStep(2)}
+          onPress={() => setStep(2)}
           style={styles.btnContainer}>
           <Text style={styles.btnText}>Change Goals</Text>
         </TouchableOpacity>
@@ -99,15 +100,19 @@ const DietResult = ({
 };
 
 const styles = StyleSheet.create({
-  btnText:{
-    color: '#fff',fontFamily: fonts.medium,fontSize: 16,textAlign: 'center'},
-  btnContainer:{
+  btnText: {
+    color: '#fff',
+    fontFamily: fonts.medium,
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  btnContainer: {
     width: '45%',
     height: 50,
     backgroundColor: colors.greenColorTheme,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10
+    borderRadius: 10,
   },
   container: {
     gap: 10,
