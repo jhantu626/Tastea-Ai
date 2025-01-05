@@ -10,8 +10,21 @@ import {TextInput} from 'react-native-gesture-handler';
 import {colors} from '../../utils/colors';
 import {fonts} from '../../utils/fonts';
 import {Dropdown} from 'react-native-element-dropdown';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 
-const Diet1 = ({setStep}) => {
+const Diet1 = ({
+  setStep,
+  gender,
+  setGender,
+  selectedActivity,
+  setSelectedActivity,
+  height,
+  setHeight,
+  weight,
+  setWeight,
+  age,
+  setAge,
+}) => {
   const activityValues = [
     {value: 'Little to no exercise'},
     {value: 'Light exercise 1-3 days a week'},
@@ -21,13 +34,13 @@ const Diet1 = ({setStep}) => {
     {value: 'None'},
   ];
 
-  const [gender, setGender] = useState('');
-  const [selectedActivity, setSelectedActivity] = useState(null);
   return (
     <View style={{marginVertical: 20, gap: 10}}>
       <View style={styles.subContainer}>
         <Text style={styles.label}>Age</Text>
         <TextInput
+          value={age}
+          onChangeText={text => setAge(text)}
           style={styles.inputBox}
           placeholder="Enter Age Here"
           keyboardType="number-pad"
@@ -73,11 +86,15 @@ const Diet1 = ({setStep}) => {
         <Text style={styles.label}>Height</Text>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <TextInput
+            value={height.feet}
+            onChangeText={text => setHeight(prev => ({...prev, feet: text}))}
             keyboardType="number-pad"
             placeholder="Feet"
             style={styles.heightInput}
           />
           <TextInput
+            value={height.inces}
+            onChangeText={text => setHeight(prev => ({...prev, inces: text}))}
             keyboardType="number-pad"
             placeholder="Inces"
             style={styles.heightInput}
@@ -87,6 +104,8 @@ const Diet1 = ({setStep}) => {
       <View style={styles.subContainer}>
         <Text style={styles.label}>Weight</Text>
         <TextInput
+          value={weight}
+          onChangeText={text => setWeight(text)}
           style={styles.inputBox}
           placeholder="Enter Weight Here"
           keyboardType="number-pad"
@@ -108,7 +127,7 @@ const Diet1 = ({setStep}) => {
             borderWidth: 1,
             height: 50,
             padding: 5,
-            borderRadius: 10
+            borderRadius: 10,
           }}
           itemTextStyle={{
             fontFamily: fonts.medium,
@@ -124,18 +143,48 @@ const Diet1 = ({setStep}) => {
           }}
         />
       </View>
-      <TouchableOpacity onPress={()=>setStep(prev=>prev+1)} style={{
-        height: 50,
-        backgroundColor: '#4CAF50',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10
-      }}>
-        <Text style={{
-          fontSize: 17,
-          color: '#fff',
-          fontFamily: fonts.medium
-        }}>Next</Text>
+      <TouchableOpacity
+        onPress={() => {
+          if (
+            gender === '' &&
+            selectedActivity === null &&
+            (height.feet === '' || height.inces === '') &&
+            weight === '' &&
+            age === ''
+          ) {
+            Toast.show({
+              title: 'Warning',
+              type: ALERT_TYPE.WARNING,
+              textBody: 'Select All the fields',
+              titleStyle: {
+                fontFamily: fonts.semiBold,
+              },
+              textBodyStyle: {
+                fontSize: 16,
+                fontFamily: fonts.medium,
+                color: colors.fontColor1
+              }
+            });
+            return;
+          } else {
+            setStep(prev => prev + 1);
+          }
+        }}
+        style={{
+          height: 50,
+          backgroundColor: '#4CAF50',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: 10,
+        }}>
+        <Text
+          style={{
+            fontSize: 17,
+            color: '#fff',
+            fontFamily: fonts.medium,
+          }}>
+          Next
+        </Text>
       </TouchableOpacity>
     </View>
   );

@@ -40,17 +40,38 @@ const customStyles = {
 };
 
 const DietPlanCreator = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(0);
   const labels = ['Physical Info', 'Mean Preferences', 'Goal', 'Confirmation'];
+
+  // Diet Plan Datas
+  const [gender, setGender] = useState('');
+  const [selectedActivity, setSelectedActivity] = useState(null);
+  const [height, setHeight] = useState({feet: '', inces: ''});
+  const [weight, setWeight] = useState('');
+  const [age, setAge] = useState('');
 
   const renderStepContent = () => {
     switch (step) {
       case 0:
-        return <Diet1 setStep={setStep} />;
+        return (
+          <Diet1
+            setStep={setStep}
+            gender={gender}
+            setGender={setGender}
+            selectedActivity={selectedActivity}
+            setSelectedActivity={setSelectedActivity}
+            height={height}
+            setHeight={setHeight}
+            weight={weight}
+            setWeight={setWeight}
+            age={age}
+            setAge={setAge}
+          />
+        );
       case 1:
-        return <Diet2 setStep={setStep}/>;
+        return <Diet2 setStep={setStep} />;
       case 2:
-        return <Diet3 setStep={setStep}/>;
+        return <Diet3 setStep={setStep} />;
       case 3:
         return <DietResult />;
       default:
@@ -59,17 +80,17 @@ const DietPlanCreator = () => {
   };
 
   return (
-    <View style={{flex: 1,paddingHorizontal: 20}}>
-        <Header title="Diet Plan Creator" />
-        <View style={styles.stepIndicatorContainer}>
-          <StepIndicator
-            currentPosition={step}
-            labels={labels}
-            stepCount={labels.length}
-            customStyles={customStyles}
-            direction="horizontal"
-          />
-        </View>
+    <View style={{flex: 1, paddingHorizontal: 20}}>
+      <Header title="Diet Plan Creator" />
+      <View style={styles.stepIndicatorContainer}>
+        <StepIndicator
+          currentPosition={step}
+          labels={labels}
+          stepCount={labels.length}
+          customStyles={customStyles}
+          direction="horizontal"
+        />
+      </View>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -83,7 +104,7 @@ const DietPlanCreator = () => {
 export default DietPlanCreator;
 
 const styles = StyleSheet.create({
-  scrollContent: {  
+  scrollContent: {
     backgroundColor: colors.defaultBgColor,
   },
 });
