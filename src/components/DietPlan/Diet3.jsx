@@ -2,6 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {fonts} from '../../utils/fonts';
 import {colors} from '../../utils/colors';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 
 const dietGoals = [
   // Weight Management
@@ -41,8 +42,7 @@ const dietGoals = [
   'Plan Meals',
 ];
 
-const Diet3 = ({setStep}) => {
-  const [selectedDietGoal, setSelectedDietGoal] = useState([]);
+const Diet3 = ({setStep, selectedDietGoal, setSelectedDietGoal}) => {
   return (
     <View style={styles.container}>
       <Text
@@ -79,14 +79,33 @@ const Diet3 = ({setStep}) => {
       </View>
       <View style={styles.btnContainer}>
         <TouchableOpacity
-        onPress={()=>setStep(prev=>prev-1)}
+          onPress={() => setStep(prev => prev - 1)}
           style={[styles.btn, {backgroundColor: colors.fontColor1}]}>
           <Text style={{fontSize: 16, color: '#fff', fontFamily: fonts.medium}}>
             Back
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-        onPress={()=>setStep(prev=>prev+1)}
+          onPress={() => {
+            if (selectedDietGoal.length===0) {
+              Toast.show({
+                title: 'Warning',
+                type: ALERT_TYPE.WARNING,
+                textBody: 'Select A Goal Option',
+                titleStyle: {
+                  fontFamily: fonts.semiBold,
+                },
+                textBodyStyle: {
+                  fontSize: 16,
+                  fontFamily: fonts.medium,
+                  color: colors.fontColor1,
+                },
+              });
+              return;
+            } else {
+              setStep(prev => prev + 1);
+            }
+          }}
           style={[styles.btn, {backgroundColor: colors.greenColorTheme}]}>
           <Text style={{fontSize: 16, color: '#fff', fontFamily: fonts.medium}}>
             Next

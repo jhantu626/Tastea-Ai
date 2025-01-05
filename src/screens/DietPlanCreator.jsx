@@ -40,7 +40,7 @@ const customStyles = {
 };
 
 const DietPlanCreator = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
   const labels = ['Physical Info', 'Mean Preferences', 'Goal', 'Confirmation'];
 
   // Diet Plan Datas
@@ -50,6 +50,7 @@ const DietPlanCreator = () => {
   const [weight, setWeight] = useState('');
   const [age, setAge] = useState('');
   const [selectedMeal, setSelectedMeal] = useState('');
+  const [selectedDietGoal, setSelectedDietGoal] = useState([]);
   const renderStepContent = () => {
     switch (step) {
       case 0:
@@ -77,7 +78,13 @@ const DietPlanCreator = () => {
           />
         );
       case 2:
-        return <Diet3 setStep={setStep} />;
+        return (
+          <Diet3
+            setStep={setStep}
+            selectedDietGoal={selectedDietGoal}
+            setSelectedDietGoal={setSelectedDietGoal}
+          />
+        );
       case 3:
         return <DietResult />;
       default:
