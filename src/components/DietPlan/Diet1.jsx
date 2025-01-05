@@ -148,7 +148,7 @@ const Diet1 = ({
           if (
             gender === '' &&
             selectedActivity === null &&
-            (height.feet === '' || height.inces === '') &&
+            (height.feet === '' && height.inces === '') &&
             weight === '' &&
             age === ''
           ) {
@@ -162,8 +162,8 @@ const Diet1 = ({
               textBodyStyle: {
                 fontSize: 16,
                 fontFamily: fonts.medium,
-                color: colors.fontColor1
-              }
+                color: colors.fontColor1,
+              },
             });
             return;
           } else {
