@@ -7,7 +7,7 @@ const AuthContext=createContext();
 
 const AuthProvider=({children})=>{
 
-    const [userToken,setUserToken]=useState(null);
+    const [userToken,setUserToken]=useState();
 
     const login=async ({token})=>{
         try {

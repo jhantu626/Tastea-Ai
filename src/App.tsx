@@ -67,7 +67,7 @@ const App = () => {
   const DietStack = () => {
     return (
       <dietStack.Navigator
-        initialRouteName="DietPlanCreator"
+        initialRouteName="DietPlanGenerator"
         screenOptions={{
           headerShown: false,
           animation: 'slide_from_right',

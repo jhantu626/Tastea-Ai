@@ -8,6 +8,11 @@ const ProfileScreen = () => {
   return (
     <View style={{flex: 1,paddingHorizontal: 20}}>
       <Header title='Profile'/>
+      <TouchableOpacity onPress={async ()=>{
+        await logout();
+      }}>
+        <Text>Logout</Text>
+      </TouchableOpacity>
     </View>
   )
 }
