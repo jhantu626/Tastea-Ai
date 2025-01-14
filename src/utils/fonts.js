@@ -9,7 +9,6 @@ const fonts = {
   poppinsLight: 'Poppins-Light',
   poppinsRegular: 'Poppins-Regular',
   poppinsMedium: 'Poppins-Medium',
-  poppinsSemiBold: 'Poppins-SemiBold',
   poppinsBold: 'Poppins-Bold',
 };
 

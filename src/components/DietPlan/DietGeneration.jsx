@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import Header from '../Header';
@@ -10,6 +10,14 @@ import {fonts} from '../../utils/fonts';
 
 const DietGeneration = () => {
   const route = useRoute();
+  const [inputQuery, setInputQuery] = useState('');
+  const [chats, setChats] = useState([
+    {
+      text: 'Hi',
+      type: 'ai',
+    },
+    {text: 'hello', type: 'user'},
+  ]);
 
   // const {
   //   gender,
@@ -29,40 +37,46 @@ const DietGeneration = () => {
   //   selectedMeal,
   //   selectedDietGoal,)
 
+  const handleSubmitQuery = () => {
+    if (inputQuery === '') {
+      return;
+    }
+    setChats([...chats, {text: inputQuery, type: 'user'}]);
+    setInputQuery('');
+  };
+
   return (
-    <View style={{flex: 1, paddingHorizontal: 20}}>
+    <View style={{flex: 1, paddingHorizontal: 20, backgroundColor: '#fff'}}>
       <Header title="Ai Plan" />
       <View style={styles.mainContainer}>
         <ScrollView
           style={styles.scrollContainer}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
-          <Text style={styles.aiTextStyles}>
-            <MaterialCommunityIcons name="robot" size={24} />
-            Hey! I’ve been working on this new project for the past few weeks,
-            and I’m really excited about how it’s coming together. It’s a mobile
-            app designed to simplify travel bookings, especially for frequent
-            flyers. The app focuses on creating a seamless experience where
-            users can search, compare, and book flights quickly. I’m building it
-            with React Native for the frontend and using Spring Boot for the
-            backend, so it’s cross-platform and has a solid, scalable API. Right
-            now, I’m working on integrating a flight search API to provide
-            real-time results, and I’ve already implemented user authentication
-            and payment processing with Stripe. The challenge I’m tackling at
-            the moment is optimizing the UI for different devices and ensuring
-            everything works smoothly, even on slower connections. Once I’m done
-            with that, I plan to add a feature for saving user preferences so
-            the app can recommend flights based on their history. It’s been a
-            lot of work, but I’m learning so much, and I can’t wait to share the
-            final product. Do you have any tips for testing or deploying mobile
-            apps effectively? I’d love to hear your thoughts if you’ve worked on
-            something similar!
-          </Text>
+          {chats.map((chat, index) => (
+            <Text
+              key={index}
+              style={[
+                styles.aiTextStyles,
+                chat.type === 'ai' ? styles.aiText : styles.userText,
+              ]}>
+              {chat.type === 'ai' && (
+                <MaterialCommunityIcons name="robot" size={24} />
+              )}
+              {'  '}
+              {chat.text}
+            </Text>
+          ))}
         </ScrollView>
 
         <View style={styles.textContainer}>
-          <TextInput placeholder="Enter Query" />
-          <TouchableOpacity style={styles.sendBtn}>
+          <TextInput
+            value={inputQuery}
+            onChangeText={text => setInputQuery(text)}
+            style={styles.queryInput}
+            placeholder="Enter Query"
+          />
+          <TouchableOpacity style={styles.sendBtn} onPress={handleSubmitQuery}>
             <Ionicons name="paper-plane" size={28} />
           </TouchableOpacity>
         </View>
@@ -103,12 +117,24 @@ const styles = StyleSheet.create({
     color: colors.fontColor1,
   },
   aiTextStyles: {
-    fontFamily: fonts.regular,
+    fontFamily: fonts.poppinsMedium,
     fontSize: 14,
-    width: '90%',
-    textAlign: 'left',
+    width: 'auto',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    marginVertical: 5,
+    justifyContent: 'center',
+  },
+  aiText: {
     backgroundColor: colors.aiChatBackground,
-    borderRadius: 10
+    alignSelf: 'flex-start',
+    textAlign: 'left',
+  },
+  userText: {
+    backgroundColor: colors.userChatBackground,
+    alignSelf: 'flex-end',
+    textAlign: 'right',
   },
 });
 
