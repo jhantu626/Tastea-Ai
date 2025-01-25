@@ -67,7 +67,7 @@ const App = () => {
   const DietStack = () => {
     return (
       <dietStack.Navigator
-        initialRouteName="DietPlanGenerator"
+        initialRouteName="DietPlanHome"
         screenOptions={{
           headerShown: false,
           animation: 'slide_from_right',
@@ -82,7 +82,7 @@ const App = () => {
   const AppStack = () => {
     return (
       <Tabs.Navigator
-        initialRouteName="DietPlan"
+        initialRouteName="Home"
         screenOptions={{
           tabBarActiveTintColor: colors.theme,
           tabBarInactiveTintColor: 'gray',

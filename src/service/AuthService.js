@@ -8,12 +8,12 @@ class AuthService{
     async signup({email,password}){
         const uri=`${this.baseUrl}/api/v1/auth/register`;
         try {
-            console.log("signup")
+            console.info("signup")
             const response=await axios.post(uri,{
                 email: email,
                 password: password
             })
-            console.log("signup completed")
+            console.info("signup completed")
             const data=await response.data;
             return data;
         } catch (error) {

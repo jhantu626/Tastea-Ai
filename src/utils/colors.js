@@ -9,4 +9,17 @@ const colors = {
   aiChatBackground: '#E9FCE8',
 };
 
+
+// const colors = {
+//   theme: '#e64a7b',     // Refined Pink/Magenta
+//   secondaryTheme: '#f7bb5f',  // Softer Orange/Amber
+//   defaultBgColor: '#f2f3f5',  // Warmer Light Gray
+//   headerTextColor: '#555555', // Slightly Darker Medium Gray
+//   fontColor1: '#6b6b6b',    // Refined Dark Gray
+//   greenColorTheme: '#43a047', // Muted Dark Green
+//   userChatBackground: '#e8f5ff',
+//   aiChatBackground: '#e9fce8',
+// };
+
+
 export {colors};
