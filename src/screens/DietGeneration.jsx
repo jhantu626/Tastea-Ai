@@ -1,5 +1,17 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import Header from '../components/Header';
@@ -10,6 +22,9 @@ import {fonts} from '../utils/fonts';
 import {aiService} from '../service/AiService';
 import {AuthContext} from '../context/AuthContext';
 import DietBackground from '../components/Backgrounds/DietBackground';
+import Markdown from 'react-native-markdown-display';
+import TypeWriter from 'react-native-typewriter';
+import {PrimaryLoader} from '../components';
 
 const DietGeneration = () => {
   const route = useRoute();
@@ -34,6 +49,12 @@ const DietGeneration = () => {
     selectedDietGoal,
   } = route.params;
 
+  //State Variables
+  const scrollViewRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const promptText = `Create a customized diet plan considering the following user details: Gender: ${gender} Activity Level ${selectedActivity} Height: ${height?.feet} feet ${height?.inces} Weight:${weight} Age:${age} (years) Meal Preferences:${selectedMeal} Diet Goal:${selectedDietGoal} The plan should include daily calorie targets and macronutrient ratios. Please generate a full diet plan, and act as TasteaAi.`;
+
   const handleSubmitQuery = () => {
     if (inputQuery === '') {
       return;
@@ -42,31 +63,45 @@ const DietGeneration = () => {
     setInputQuery('');
   };
 
-  const aiFetch = async ({prompt}) => {
+  const aiFetch = async () => {
+    setIsLoading(true);
     try {
       const data = await aiService.dietPlanCreatory({
-        promptText: prompt,
+        promptText: promptText,
         authToken: userToken,
       });
-      console.log('Data ', data.message.candidates[0].content[0]);
+      console.log(data);
+
+      const parsedMessage = JSON.parse(data.message);
+
+      if (parsedMessage?.candidates?.length > 0) {
+        const firstCandidate = parsedMessage.candidates[0];
+
+        if (firstCandidate?.content?.parts?.length > 0) {
+          const firstPart = firstCandidate.content.parts[0];
+
+          if (firstPart?.text) {
+            console.log(firstPart.text);
+            setChats(prev => [...prev, {text: firstPart.text, type: 'ai'}]);
+          } else {
+            console.error('Text is missing in the first part.');
+          }
+        }
+      }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    const promptText = `Create a customized diet plan considering the following user details: Gender: ${gender} Activity Level ${selectedActivity} Height: ${height.feet} feet ${height.inces} Weight:${weight} Age:${age} (years) Meal Preferences:${selectedMeal} Diet Goal:${selectedDietGoal} The plan should include daily calorie targets and macronutrient ratios. Please generate a full diet plan, and act as TasteaAi.`;
-    console.log(
-      gender,
-      selectedActivity,
-      height,
-      weight,
-      age,
-      selectedMeal,
-      selectedDietGoal,
-    );
-    aiFetch({prompt: promptText});
+    aiFetch();
   }, []);
+
+  const scrollToBottomChat = () => {
+    scrollViewRef.current?.scrollToEnd({animated: true});
+  };
 
   return (
     <DietBackground>
@@ -74,23 +109,30 @@ const DietGeneration = () => {
         <Header title="Ai Plan" />
         <View style={styles.mainContainer}>
           <ScrollView
+            ref={scrollViewRef}
             style={styles.scrollContainer}
             showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}>
+            showsHorizontalScrollIndicator={false}
+            onContentSizeChange={() => scrollToBottomChat()}>
             {chats.map((chat, index) => (
-              <Text
-                key={index}
-                style={[
-                  styles.aiTextStyles,
-                  chat.type === 'ai' ? styles.aiText : styles.userText,
-                ]}>
-                {chat.type === 'ai' && (
-                  <MaterialCommunityIcons name="robot" size={24} />
-                )}
-                {'  '}
-                {chat.text}
-              </Text>
+              <>
+                <Text
+                  key={index}
+                  style={[
+                    styles.aiTextStyles,
+                    chat.type === 'ai' ? styles.aiText : styles.userText,
+                  ]}>
+                  {chat.type === 'ai' && (
+                    <MaterialCommunityIcons name="robot" size={24} />
+                  )}
+                  {'  '}
+                  <TypeWriter typing={9} maxDelay={30} minDelay={10}>
+                    {chat.text}
+                  </TypeWriter>
+                </Text>
+              </>
             ))}
+            {isLoading && <PrimaryLoader />}
           </ScrollView>
 
           <View style={styles.textContainer}>

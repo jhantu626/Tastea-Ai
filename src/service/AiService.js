@@ -17,7 +17,7 @@ class AiService {
           },
         },
       );
-      const data = response.data;
+      const data = await response.data;
       return data;
     } catch (error) {
       const data = await error.response.data;
