@@ -7,6 +7,7 @@ import Diet1 from '../components/DietPlan/Diet1';
 import Diet2 from '../components/DietPlan/Diet2';
 import Diet3 from '../components/DietPlan/Diet3';
 import DietResult from '../components/DietPlan/DietResult';
+import DietBackground from '../components/Backgrounds/DietBackground';
 
 const {width} = Dimensions.get('window');
 
@@ -104,24 +105,26 @@ const DietPlanCreator = () => {
   };
 
   return (
-    <View style={{flex: 1, paddingHorizontal: 20}}>
-      <Header title="Diet Plan Creator" />
-      <View style={styles.stepIndicatorContainer}>
-        <StepIndicator
-          currentPosition={step}
-          labels={labels}
-          stepCount={labels.length}
-          customStyles={customStyles}
-          direction="horizontal"
-        />
+    <DietBackground>
+      <View style={{flex: 1, paddingHorizontal: 20}}>
+        <Header title="Diet Plan Creator" />
+        <View style={styles.stepIndicatorContainer}>
+          <StepIndicator
+            currentPosition={step}
+            labels={labels}
+            stepCount={labels.length}
+            customStyles={customStyles}
+            direction="horizontal"
+          />
+        </View>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}>
+          {renderStepContent()}
+        </ScrollView>
       </View>
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}>
-        {renderStepContent()}
-      </ScrollView>
-    </View>
+    </DietBackground>
   );
 };
 
@@ -129,6 +132,6 @@ export default DietPlanCreator;
 
 const styles = StyleSheet.create({
   scrollContent: {
-    backgroundColor: colors.defaultBgColor,
+    // backgroundColor: colors.defaultBgColor,
   },
 });

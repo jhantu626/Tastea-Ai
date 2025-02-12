@@ -21,7 +21,7 @@ import AuthProvider, {AuthContext} from './context/AuthContext';
 import {AlertNotificationRoot} from 'react-native-alert-notification';
 import {createStackNavigator} from '@react-navigation/stack';
 import DietPlanCreator from './screens/DietPlanCreator';
-import DietGeneration from './components/DietPlan/DietGeneration';
+import DietGeneration from './screens/DietGeneration';
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(true);

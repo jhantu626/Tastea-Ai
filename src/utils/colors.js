@@ -5,8 +5,10 @@ const colors = {
   headerTextColor: '#7B7B7B',
   fontColor1: '#888888',
   greenColorTheme: '#4CAF50',
-  userChatBackground: '#E8F5FF',
-  aiChatBackground: '#E9FCE8',
+  // userChatBackground: '#E8F5FF',
+  userChatBackground: '#E0F7FA',
+  // aiChatBackground: '#E9FCE8',
+  aiChatBackground: '#D5F5E3',
 };
 
 
